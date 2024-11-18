@@ -1,26 +1,26 @@
 CREATE TABLE RIDER1(
 	compass_id INTEGER,
-	dob VARCHAR,
+	dob VARCHAR(255),
 	PRIMARY KEY(compass_id)
 );
 
 CREATE TABLE RIDER2(
-	rider_type VARCHAR,
-	dob VARCHAR,
+	rider_type VARCHAR(255),
+	dob VARCHAR(255),
 	PRIMARY KEY (dob)
 );
 
 CREATE TABLE PaidFares1(
 	compass_id INTEGER,
-	date_time VARCHAR,
-	fare_type VARCHAR,
+	date_time VARCHAR(255),
+	fare_type VARCHAR(255),
 	PRIMARY KEY(compass_id, date_time),
 	FOREIGN KEY(compass_id) REFERENCES Rider1 ON DELETE CASCADE,
 	FOREIGN KEY(fare_type) REFERENCES PaidFares2 ON DELETE CASCADE
 );
 
 CREATE TABLE PaidFares2(
-	fare_type VARCHAR,
+	fare_type VARCHAR(255),
 	price DECIMAL(5,2),
 	PRIMARY KEY(fare_type)
 );
@@ -28,7 +28,7 @@ CREATE TABLE PaidFares2(
 CREATE TABLE ValidateFare(
 	scan_id INTEGER,
 	compass_id INTEGER,
-	date_time VARCHAR,
+	date_time VARCHAR(255),
 	PRIMARY KEY(scan_id,compass_id,date_time),
 	FOREIGN KEY(scan_id) REFERENCES Scanner ON DELETE CASCADE,
 	FOREIGN KEY(compass_id,date_time) REFERENCES PaidFares1(compass_id,date_time) ON DELETE CASCADE
@@ -42,8 +42,6 @@ CREATE TABLE ScannerHas(
 	FOREIGN KEY(stat_id) REFERENCES TrainStation ON DELETE CASCADE,
 	FOREIGN KEY(bus_id) REFERENCES Bus ON DELETE CASCADE
 );
-
-
 
 CREATE TABLE TrainStation (
     stat_id INTEGER,
@@ -93,4 +91,63 @@ CREATE TABLE BusRoute (
     route_num INTEGER NOT NULL UNIQUE,
     PRIMARY KEY (rid),
     FOREIGN KEY (rid) REFERENCES Route(rid) ON DELETE CASCADE
+);
+
+CREATE TABLE Driver (
+    staff_id INTEGER PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	seniority VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE BusDriver (
+	staff_id INTEGER PRIMARY KEY,
+	FOREIGN KEY (staff_id) REFERENCES Driver(staff_id)
+);
+
+
+CREATE TABLE TrainDriver (
+	staff_id INTEGER PRIMARY KEY,
+	FOREIGN KEY (staff_id) REFERENCES Driver(staff_id)
+);
+
+CREATE TABLE Bus (
+	bus_id INTEGER PRIMARY KEY,
+	bus_size INTEGER NOT NULL
+);
+
+CREATE TABLE Train (
+	train_id INTEGER PRIMARY KEY,
+	train_size INTEGER NOT NULL
+);
+
+CREATE TABLE DrivesBus (
+	bus_id INTEGER,
+	staff_id INTEGER,
+	PRIMARY KEY (bus_id),
+	FOREIGN KEY (bus_id) REFERENCES Bus(bus_id)
+	FOREIGN KEY (staff_id) REFERENCES BusDriver(staff_id)
+);
+
+CREATE TABLE DrivesTrain (
+	train_id INTEGER,
+	staff_id INTEGER,
+	PRIMARY KEY (train_id),
+	FOREIGN KEY (train_id) REFERENCES Train(train_id),
+	FOREIGN KEY (staff_id) REFERENCES TrainDriver(staff_id)
+);
+
+CREATE TABLE BusAssigned (
+	bus_id INTEGER,
+	route_id INTEGER,
+	PRIMARY KEY (bus_id),
+	FOREIGN KEY (bus_id), REFERENCES Bus(bus_id)
+	FOREIGN KEY (route_id), REFERENCES Route(route_id)
+);
+
+CREATE TABLE TrainAssigned (
+	train_id INTEGER,
+	route_id INTEGER,
+	PRIMARY KEY (train_id),
+	FOREIGN KEY (train_id), REFERENCES Train(train_id)
+	FOREIGN KEY (route_id), REFERENCES Route(route_id)
 );
