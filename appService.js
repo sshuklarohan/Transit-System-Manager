@@ -85,6 +85,17 @@ async function fetchDemotableFromDb() {
     });
 }
 
+async function fetchClientTableFromDb() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT compass_id, dob, rider_type FROM RIDER1 r1, RIDER2 r2 WHERE r1.dob = r2.dob');
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
+
+
 async function initiateDemotable() {
     return await withOracleDB(async (connection) => {
         try {
@@ -110,6 +121,20 @@ async function insertDemotable(id, name) {
         const result = await connection.execute(
             `INSERT INTO DEMOTABLE (id, name) VALUES (:id, :name)`,
             [id, name],
+            { autoCommit: true }
+        );
+
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch(() => {
+        return false;
+    });
+}
+
+async function insertClientTable(compass_id, dob) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `INSERT INTO RIDER1 (compass_id, dob) VALUES (:compass_id, :dob)`,
+            [compass_id, dob],
             { autoCommit: true }
         );
 
@@ -145,8 +170,10 @@ async function countDemotable() {
 module.exports = {
     testOracleConnection,
     fetchDemotableFromDb,
+    fetchClientTableFromDb,
     initiateDemotable, 
-    insertDemotable, 
+    insertDemotable,
+    insertClientTable, 
     updateNameDemotable, 
     countDemotable
 };
