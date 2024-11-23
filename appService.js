@@ -144,9 +144,17 @@ async function countDemotable() {
 
 async function fetchEmployeesVehicles() {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            'SELECT d.name AS employee_name, d.seniority, bus_id AS vehicle_id, bus_size AS vehicle_size FROM Driver d '
-        );
+        const result = await connection.execute('SELECT d.name AS employee_name, d.seniority, b.bus_id AS vehicle_id, b.bus_size AS vehicle_size FROM Driver d LEFT JOIN BusDriver bd ON d.staff_id = bd.staff_id LEFT JOIN DrivesBus db ON bd.staff_id = db.staff_id LEFT JOIN Bus b ON db.bus_id = b.bus_id UNION SELECT d.name AS employee_name, d.seniority, t.train_id AS vehicle_id, t.train_size AS vehicle_size FROM Driver d LEFT JOIN TrainDriver td ON d.staff_id = td.staff_id LEFT JOIN DrivesTrain dt ON td.staff_id = dt.staff_id LEFT JOIN Train t ON dt.train_id = t.train_id');
+        return result.rows;
+    }).catch(() => {
+        return -1;
+    });
+}
+
+async function fetchDriver(routeNum) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT d.name AS employee_name, d.seniorty, r.route_num, r.destination FROM Driver d JOIN BusDriver bd ON d.staff_id = bd.staff_id JOIN DrivesBus db ON bd.staff_id = db.staff_id JOIN BusAssigned ba ON db.bus_id = ba.bus_id JOIN Route r ON ba.route_id= r.rid WHERE r.route_num = :routeNum UNION SELECT d.name AS driver.name, d.seniority, r.route_num, r.destination FROM driver d JOIN TrainDriver td ON d.staff_id = td.staff_id JOIN DrivesTrain dt ON td.staff_id = dt.staff_id JOIN TrainAssigned ta ON dt.train_id = ta.train_id JOIN Route r ON ta.route_id = r.rid WHERE r.route_num = :routeNum')
+        return result.rows;
     }).catch(() => {
         return -1;
     });
@@ -158,5 +166,7 @@ module.exports = {
     initiateDemotable, 
     insertDemotable, 
     updateNameDemotable, 
-    countDemotable
+    countDemotable,
+    fetchEmployeesVehicles,
+    fetchDriver
 };
