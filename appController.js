@@ -20,6 +20,11 @@ router.get('/demotable', async (req, res) => {
     res.json({data: tableContent});
 });
 
+router.get('/clientTable', async (req, res) => {
+    const tableContent = await appService.fetchClientTableFromDb();
+    res.json({data: tableContent});
+});
+
 router.post("/initiate-demotable", async (req, res) => {
     const initiateResult = await appService.initiateDemotable();
     if (initiateResult) {
@@ -32,6 +37,16 @@ router.post("/initiate-demotable", async (req, res) => {
 router.post("/insert-demotable", async (req, res) => {
     const { id, name } = req.body;
     const insertResult = await appService.insertDemotable(id, name);
+    if (insertResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.post("/insert-clientTable", async (req, res) => {
+    const { compass_id, dob } = req.body;
+    const insertResult = await appService.insertClientTable(compass_id, dob);
     if (insertResult) {
         res.json({ success: true });
     } else {
