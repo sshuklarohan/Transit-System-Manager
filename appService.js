@@ -142,6 +142,16 @@ async function countDemotable() {
     });
 }
 
+async function fetchEmployeesVehicles() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            'SELECT d.name AS employee_name, d.seniority, bus_id AS vehicle_id, bus_size AS vehicle_size FROM Driver d '
+        );
+    }).catch(() => {
+        return -1;
+    });
+}
+
 module.exports = {
     testOracleConnection,
     fetchDemotableFromDb,

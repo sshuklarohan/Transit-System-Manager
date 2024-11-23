@@ -64,5 +64,23 @@ router.get('/count-demotable', async (req, res) => {
     }
 });
 
+router.get('/employees-vehicles', async (req, res) => {
+    const employeesVehicles = await appService.fetchEmployeesVehicles();
+    if(employeesVehicles) {
+        res.json({success: true, data: employeesVehicles });
+    } else {
+        res.status(500).json({success: false });
+    }
+});
+
+router.get('/employees-vehicles/:routeNum', async (req, res) => {
+    const { routeNum } = req.params;
+    const driver = await appService.fetchDriver(routeNum);
+    if (driver) {
+        res.json({ success: true, data: drivers });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
 
 module.exports = router;
