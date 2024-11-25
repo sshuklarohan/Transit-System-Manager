@@ -25,6 +25,25 @@ router.get('/clientTable', async (req, res) => {
     res.json({data: tableContent});
 });
 
+router.get('/routeTable', async (req, res) => {
+    const tableContent = await appService.fetchRoutesTableFromDb();
+    res.json({data: tableContent});
+});
+
+router.get('/busRouteTable', async (req, res) => {
+    const tableContent = await appService.fetchBusRouteTableFromDb();
+    res.json({data: tableContent});
+});
+
+router.get('/groupBusStops', async (req, res) => {
+    const tableContent = await appService.groupCountBusStops();
+    res.json({data: tableContent});
+});
+router.get('/trainLineTable', async (req, res) => {
+    const tableContent = await appService.fetchTrainLineTableFromDb();
+    res.json({data: tableContent});
+});
+
 router.post("/initiate-demotable", async (req, res) => {
     const initiateResult = await appService.initiateDemotable();
     if (initiateResult) {
@@ -77,6 +96,18 @@ router.get('/count-demotable', async (req, res) => {
             count: tableCount
         });
     }
+});
+
+router.post('/query-select-BusRoute', async (req, res) => {
+    const { routeNumbers } = req.body;
+    const tableContent = await appService.querySelectBusRouteTable(routeNumbers);
+    res.json({data: tableContent});
+});
+
+router.post('/query-select-TrainLine', async (req, res) => {
+    const { lineNames } = req.body;
+    const tableContent = await appService.querySelectTrainLineTable(lineNames);
+    res.json({data: tableContent});
 });
 
 

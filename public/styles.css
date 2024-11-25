@@ -84,3 +84,17 @@ input::placeholder, textarea::placeholder {
     height: 1em;
     vertical-align: middle;
 }
+
+    select {
+        width: 200px; /* Adjust width */
+        height: auto; /* Let the height be defined by size attribute */
+        font-size: 16px; /* Larger text for readability */
+        padding: 3px; /* Add padding for better usability */
+        border: 1px solid #ccc; /* Add border for clarity */
+        border-radius: 4px; /* Optional: rounded corners */
+    }
+
+    select option {
+        padding: 5px; /* Add padding to each option */
+    }
+
