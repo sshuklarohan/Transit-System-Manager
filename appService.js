@@ -85,30 +85,6 @@ async function fetchDemotableFromDb() {
     });
 }
 
-
-
-async function fetchPaymentTableFromDb() {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT compass_id, SUM(price) FROM PaidFares1 p1, PaidFares2 p2 WHERE p1.fare_type = p2.fare_type GROUP BY compass_id HAVING count(*) > 1');
-        return result.rows;
-    }).catch(() => {
-        return [];
-    });
-}
-
-async function fetchFareTableFromDb(id, sel) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT :sel FROM PaidFares1 p1 NATURAL LEFT OUTER JOIN ValidateFare v, ScannerHas s WHERE compass_id = :id AND s.scan_id = v.scan_id ',
-            [id,sel],
-            { autoCommit: true });
-        return result.rows;
-    }).catch(() => {
-        return [];
-    });
-}
-
-
-
 async function fetchClientTableFromDb() {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute('SELECT compass_id, dob, rider_type FROM RIDER1 r1, RIDER2 r2 WHERE r1.dob = r2.dob');
@@ -184,22 +160,8 @@ async function insertDemotable(id, name) {
 async function insertClientTable(compass_id, dob) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `INSERT INTO RIDER1 (compass_id, dob) VALUES (:compass_id, :dob);`,
+            `INSERT INTO RIDER1 (compass_id, dob) VALUES (:compass_id, :dob)`,
             [compass_id, dob],
-            { autoCommit: true }
-        );
-
-        return result.rowsAffected && result.rowsAffected > 0;
-    }).catch(() => {
-        return false;
-    });
-}
-
-async function removeClient(id) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `DELETE FROM Rider1 WHERE compass_id = :id`,
-            [id],
             { autoCommit: true }
         );
 
@@ -295,13 +257,12 @@ module.exports = {
     testOracleConnection,
     fetchDemotableFromDb,
     fetchClientTableFromDb,
-    fetchFareTableFromDb,
-    fetchClientTableFromDb,
     fetchRoutesTableFromDb,
     fetchBusRouteTableFromDb,
     fetchTrainLineTableFromDb,
     initiateDemotable, 
-    insertDemotable, 
+    insertDemotable,
+    insertClientTable, 
     updateNameDemotable, 
     countDemotable,
     querySelectBusRouteTable,
