@@ -154,6 +154,10 @@ async function countDemotable() {
     }
 }
 
+function openClientPage() {
+    window.location.href = './client_manager.html';
+}
+
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
@@ -165,6 +169,7 @@ window.onload = function() {
     document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countDemotable").addEventListener("click", countDemotable);
+    document.getElementById("client_page").addEventListener('click',openClientPage);
 };
 
 // General function to refresh the displayed table data. 

@@ -31,7 +31,7 @@ CREATE TABLE ValidateFare(
 	compass_id INTEGER,
 	date_time VARCHAR,
 	PRIMARY KEY(scan_id,compass_id,date_time)
-	FOREIGN KEY(scan_id) REFERENCES Scanner ON DELETE CASCADE
+	FOREIGN KEY(scan_id) REFERENCES ScannerHas ON DELETE CASCADE
 	FOREIGN KEY(compass_id,date_time) REFERENCES PaidFares1(compass_id,date_time) ON DELETE CASCADE
 )
 
@@ -43,6 +43,17 @@ CREATE TABLE ScannerHas(
 	FOREIGN KEY(stat_id) REFERENCES TrainStation ON DELETE CASCADE
 	FOREIGN KEY(bus_id) REFERENCES Bus ON DELETE CASCADE
 )
+
+
+SELECT compass_id, SUM(price)
+FROM PaidFares1 p1, PaidFares2 p2
+WHERE p1.fare_type = p2.fare_type
+GROUP BY compass_id
+HAVING count(*) > 1
+
+SELECT r.compass_id
+FROM RIDER1 r
+WHERE NOT EXISTS ((SELECT scan_id FROM ScannerHas) EXCEPT (SELECT scan_id FROM PaidFares1 p WHERE p.compass_id = r.compass_id))
 
 
 
