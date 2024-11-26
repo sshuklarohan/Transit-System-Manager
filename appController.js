@@ -73,6 +73,16 @@ router.post("/insert-clientTable", async (req, res) => {
     }
 });
 
+router.post("/insert-clientTable", async (req, res) => {
+    const { compass_id, dob } = req.body;
+    const insertResult = await appService.insertClientTable(compass_id, dob);
+    if (insertResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
 router.post("/update-name-demotable", async (req, res) => {
     const { oldName, newName } = req.body;
     const updateResult = await appService.updateNameDemotable(oldName, newName);
