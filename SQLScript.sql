@@ -1,3 +1,26 @@
+DROP TABLE Route;
+DROP TABLE Driver;
+DROP TABLE BusDriver;
+DROP TABLE TrainDriver;
+DROP TABLE BUS;
+DROP TABLE TRAIN;
+DROP TABLE TRAINLINE;
+DROP TABLE TRAINSTATION;
+DROP TABLE BUSSTOP;
+DROP TABLE BusRoute;
+DROP TABLE TrainLineStopsAt;
+DROP TABLE BusRouteStopsAt;
+DROP TABLE DrivesBus;
+DROP TABLE DrivesTrain;
+DROP TABLE BusAssigned;
+DROP TABLE TrainAssigned;
+DROP TABLE RIDER2;
+DROP TABLE RIDER1;
+DROP TABLE PaidFares2;
+DROP TABLE PaidFares1;
+DROP TABLE ScannerHas;
+DROP TABLE ValidateFare;
+
 
 CREATE TABLE Route (
     rid INTEGER,
@@ -157,26 +180,22 @@ CREATE TABLE ValidateFare(
 
 DELETE FROM Route;
 
-INSERT INTO Route (rid, destination) VALUES (10, 'Downtown - Pender');
-INSERT INTO Route (rid, destination) VALUES (20, 'UBC - Bus Loop');
-INSERT INTO Route (rid, destination) VALUES (30, 'Downtown - Robson');
-INSERT INTO Route (rid, destination) VALUES (40, 'Broadway - MacDonald');
-INSERT INTO Route (rid, destination) VALUES (50, 'Broadway - Main');
+INSERT INTO Route (rid, destination) VALUES (10, 'Downtown');
+INSERT INTO Route (rid, destination) VALUES (20, 'UBC');
+INSERT INTO Route (rid, destination) VALUES (30, 'Downtown');
+INSERT INTO Route (rid, destination) VALUES (40, 'Broadway');
+INSERT INTO Route (rid, destination) VALUES (50, 'Broadway');
 INSERT INTO Route (rid, destination) VALUES (101, 'Downtown');
 INSERT INTO Route (rid, destination) VALUES (201, 'UBC');
 INSERT INTO Route (rid, destination) VALUES (301, 'Airport');
 INSERT INTO Route (rid, destination) VALUES (401, 'Waterfront');
-INSERT INTO Route (rid, destination) VALUES (501, 'Boundary');
-
-DELETE FROM TrainLine;
+INSERT INTO Route (rid, destination) VALUES (501, 'Broadway');
 
 INSERT INTO TrainLine (rid, line_name) VALUES (101, 'Green Line');
 INSERT INTO TrainLine (rid, line_name) VALUES (201, 'Red Line');
 INSERT INTO TrainLine (rid, line_name) VALUES (301, 'Blue Line');
 INSERT INTO TrainLine (rid, line_name) VALUES (401, 'Yellow Line');
 INSERT INTO TrainLine (rid, line_name) VALUES (501, 'Purple Line');
-
-DELETE FROM TrainStation;
 
 INSERT INTO TrainStation (stat_id, stat_name) VALUES (1, 'Waterfront');
 INSERT INTO TrainStation (stat_id, stat_name) VALUES (2, 'City Centre');
@@ -185,8 +204,6 @@ INSERT INTO TrainStation (stat_id, stat_name) VALUES (4, 'Marine Dr');
 INSERT INTO TrainStation (stat_id, stat_name) VALUES (5, 'University Loop');
 INSERT INTO TrainStation (stat_id, stat_name) VALUES (6, 'Airport');
 INSERT INTO TrainStation (stat_id, stat_name) VALUES (7, 'East Downtown');
-
-DELETE FROM TrainLineStopsAt;
 
 INSERT INTO TrainLineStopsAt (stat_id, rid, line_pos) VALUES (1, 101, 1);
 INSERT INTO TrainLineStopsAt (stat_id, rid, line_pos) VALUES (3, 101, 2);
@@ -202,15 +219,11 @@ INSERT INTO TrainLineStopsAt (stat_id, rid, line_pos) VALUES (4, 501, 1);
 INSERT INTO TrainLineStopsAt (stat_id, rid, line_pos) VALUES (2, 401, 2);
 INSERT INTO TrainLineStopsAt (stat_id, rid, line_pos) VALUES (6, 501, 2);
 
-DELETE FROM BusRoute;
-
 INSERT INTO BusRoute (rid, route_num) VALUES (10, 22);
 INSERT INTO BusRoute (rid, route_num) VALUES (20, 84);
 INSERT INTO BusRoute (rid, route_num) VALUES (30, 5);
 INSERT INTO BusRoute (rid, route_num) VALUES (40, 9);
 INSERT INTO BusRoute (rid, route_num) VALUES (50, 99);
-
-DELETE FROM BusStop;
 
 INSERT INTO BusStop (stop_id, address) VALUES (1, 'Blanca St @ W 4th Ave');
 INSERT INTO BusStop (stop_id, address) VALUES (2, 'W 4th Ave @ NW Marine Dr');
@@ -219,8 +232,6 @@ INSERT INTO BusStop (stop_id, address) VALUES (4, 'Howe St @ W Robson St');
 INSERT INTO BusStop (stop_id, address) VALUES (5, 'W Pender St @ W Granville St');
 INSERT INTO BusStop (stop_id, address) VALUES (6, 'Powell St @ Commercial Dr');
 INSERT INTO BusStop (stop_id, address) VALUES (7, 'E Broadway @ Clark Dr');
-
-DELETE FROM BusRouteStopsAt;
 
 INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (1, 10, 1);
 INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (2, 10, 2);
