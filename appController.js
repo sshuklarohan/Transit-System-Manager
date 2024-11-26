@@ -25,20 +25,22 @@ router.get('/clientTable', async (req, res) => {
     res.json({data: tableContent});
 });
 
-router.get('/paymentTable', async (req, res) => {
-    const tableContent = await appService.fetchPaymentTableFromDb();
+router.get('/routeTable', async (req, res) => {
+    const tableContent = await appService.fetchRoutesTableFromDb();
     res.json({data: tableContent});
 });
 
-router.get('/fareTable', async (req, res) => {
-    const { compass_id, selected } = req.body;
-    const tableContent = await appService.fetchFareTableFromDb(compass_id, selected);
+router.get('/busRouteTable', async (req, res) => {
+    const tableContent = await appService.fetchBusRouteTableFromDb();
     res.json({data: tableContent});
 });
 
-router.post('/removeClient', async (req, res) => {
-    const { compass_id } = req.body;
-    const tableContent = await appService.removeClient(compass_id);
+router.get('/groupBusStops', async (req, res) => {
+    const tableContent = await appService.groupCountBusStops();
+    res.json({data: tableContent});
+});
+router.get('/trainLineTable', async (req, res) => {
+    const tableContent = await appService.fetchTrainLineTableFromDb();
     res.json({data: tableContent});
 });
 
@@ -54,6 +56,16 @@ router.post("/initiate-demotable", async (req, res) => {
 router.post("/insert-demotable", async (req, res) => {
     const { id, name } = req.body;
     const insertResult = await appService.insertDemotable(id, name);
+    if (insertResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.post("/insert-clientTable", async (req, res) => {
+    const { compass_id, dob } = req.body;
+    const insertResult = await appService.insertClientTable(compass_id, dob);
     if (insertResult) {
         res.json({ success: true });
     } else {
@@ -94,6 +106,18 @@ router.get('/count-demotable', async (req, res) => {
             count: tableCount
         });
     }
+});
+
+router.post('/query-select-BusRoute', async (req, res) => {
+    const { routeNumbers } = req.body;
+    const tableContent = await appService.querySelectBusRouteTable(routeNumbers);
+    res.json({data: tableContent});
+});
+
+router.post('/query-select-TrainLine', async (req, res) => {
+    const { lineNames } = req.body;
+    const tableContent = await appService.querySelectTrainLineTable(lineNames);
+    res.json({data: tableContent});
 });
 
 

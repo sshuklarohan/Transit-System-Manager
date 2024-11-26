@@ -57,3 +57,4 @@ WHERE NOT EXISTS ((SELECT scan_id FROM ScannerHas) EXCEPT (SELECT scan_id FROM P
 
 
 
+

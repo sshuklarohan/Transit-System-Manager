@@ -85,16 +85,7 @@ async function fetchDemotableFromDb() {
     });
 }
 
-async function fetchClientTableFromDb() {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM RIDER1');
-        console.log("returned client table");
-        console.log(result.rows);
-        return result.rows;
-    }).catch(() => {
-        return [];
-    });
-}
+
 
 async function fetchPaymentTableFromDb() {
     return await withOracleDB(async (connection) => {
@@ -116,6 +107,44 @@ async function fetchFareTableFromDb(id, sel) {
     });
 }
 
+
+
+async function fetchClientTableFromDb() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT compass_id, dob, rider_type FROM RIDER1 r1, RIDER2 r2 WHERE r1.dob = r2.dob');
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
+async function fetchRoutesTableFromDb() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT * FROM ROUTE');
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
+async function fetchBusRouteTableFromDb() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT * FROM BUSROUTE');
+        return result.rows;
+    }).catch((error) => {
+        console.log(error.message);
+        return [];
+    });
+}
+
+async function fetchTrainLineTableFromDb() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT * FROM TRAINLINE');
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
 
 
 async function initiateDemotable() {
@@ -182,8 +211,7 @@ async function removeClient(id) {
 
 async function updateNameDemotable(oldName, newName) {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            `UPDATE DEMOTABLE SET name=:newName where name=:oldName`,
+        const result = await connection.execute(`UPDATE DEMOTABLE SET name=:newName where name=:oldName`,
             [newName, oldName],
             { autoCommit: true }
         );
@@ -203,15 +231,80 @@ async function countDemotable() {
     });
 }
 
+
+async function querySelectBusRouteTable(routeNumbers) {
+    console.log(routeNumbers, " in appService is type ", typeof(routeNumbers));
+
+    let query = "SELECT * FROM BUSROUTE WHERE ";
+    const binds = {};
+
+    const conditions = routeNumbers.map((num, index) => {
+        const bindKey = `route_num${index + 1}`; 
+        binds[bindKey] = num; 
+        return `ROUTE_NUM = :${bindKey}`; 
+    });
+
+    // Join conditions with OR
+    query += conditions.join(" OR ");
+
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(query, binds);
+        console.log("Result rows:", result.rows);
+        return result.rows;
+    }).catch((error) => {
+        console.error("Error:", error.message);
+        return [];
+    });
+}
+
+async function querySelectTrainLineTable(lineNames) {
+    let query = "SELECT * FROM TRAINLINE WHERE ";
+    const binds = {};
+
+    const conditions = lineNames.map((num, index) => {
+        const bindKey = `line_name${index + 1}`; 
+        binds[bindKey] = num; 
+        return `LINE_NAME = :${bindKey}`; 
+    });
+
+    // Join conditions with OR
+    query += conditions.join(" OR ");
+
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(query, binds);
+        console.log("train lines:", result.rows);
+        return result.rows;
+    }).catch((error) => {
+        console.error("Error:", error.message);
+        return [];
+    });
+}
+
+async function groupCountBusStops() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`SELECT COUNT(*) FROM BUSROUTESTOPSAT GROUP BY rid`,
+        );
+        return result.rows;
+    }).catch((error) => {
+        console.error("Error:", error.message);
+        return [];
+    });
+}
+
 module.exports = {
     testOracleConnection,
     fetchDemotableFromDb,
     fetchClientTableFromDb,
     fetchFareTableFromDb,
+    fetchClientTableFromDb,
+    fetchRoutesTableFromDb,
+    fetchBusRouteTableFromDb,
+    fetchTrainLineTableFromDb,
     initiateDemotable, 
-    insertDemotable,
-    removeClient,
-    insertClientTable, 
+    insertDemotable, 
     updateNameDemotable, 
-    countDemotable
+    countDemotable,
+    querySelectBusRouteTable,
+    querySelectTrainLineTable,
+    groupCountBusStops
 };
