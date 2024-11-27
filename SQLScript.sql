@@ -179,6 +179,7 @@ CREATE TABLE ValidateFare(
 	FOREIGN KEY(compass_id,date_time) REFERENCES PaidFares1(compass_id,date_time) ON DELETE CASCADE
 );
 
+
 DELETE FROM Route;
 
 INSERT INTO Route (rid, destination) VALUES (10, 'Downtown');
@@ -367,6 +368,21 @@ INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (4,'01/06/2024 12:
 INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (5,'02/03/2024 12:50','multi zone');
 INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/01/2024 12:01','zone 1');
 
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/01/2024 12:00','zone 1');
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/02/2024 12:00','zone 1');
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/03/2024 12:00','zone 1');
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/04/2024 12:00','zone 1');
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/05/2024 12:00','zone 1');
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/06/2024 12:00','zone 1');
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/07/2024 12:00','zone 1');
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/08/2024 12:00','zone 1');
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/09/2024 12:00','zone 1');
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/10/2024 12:00','zone 1');
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/11/2024 12:00','zone 1');
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/12/2024 12:00','zone 1');
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'02/01/2024 12:00','zone 1');
+INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'03/01/2024 12:00','zone 1');
+
 INSERT INTO Bus (bus_id, bus_size) VALUES (1, 47);
 INSERT INTO Bus (bus_id, bus_size) VALUES (2, 47);
 INSERT INTO Bus (bus_id, bus_size) VALUES (3, 47);
@@ -394,4 +410,21 @@ INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 2,'02/01/2024 
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (4, 3,'01/05/2024 08:00');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 4,'01/06/2024 12:00');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 5,'02/03/2024 12:50');
+
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (1, 6,'01/01/2024 12:01');
+
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (1, 6,'01/01/2024 12:00');
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 6,'01/02/2024 12:00');
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (3, 6,'01/03/2024 12:00');
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (4, 6,'01/04/2024 12:00');
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (5, 6,'01/05/2024 12:00');
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (6, 6,'01/06/2024 12:00');
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (7, 6,'01/07/2024 12:00');
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (8, 6,'01/08/2024 12:00');
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (9, 6,'01/09/2024 12:00');
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (10, 6,'01/10/2024 12:00');
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (11, 6,'01/11/2024 12:00');
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (12, 6,'01/12/2024 12:00');
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (13, 6,'02/01/2024 12:00');
+INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (14, 6,'03/01/2024 12:00');
+
