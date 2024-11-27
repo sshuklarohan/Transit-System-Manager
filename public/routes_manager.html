@@ -9,44 +9,23 @@
 <body>
 
 
-    <h2> Bus Routes </h2>
+    <h2> Routes </h2>
     <div>
-        <!-- <label for="filterInput">Search Routes:</label> -->
-        <!-- <input type="text" id="filterInput" placeholder="Search..."> -->
         Select Route Number(s): 
-        <select id="selectBusRoutes" required multiple size="10">
+        <select id="selectRoutes" required multiple size="10">
             <option value="All">All</option>
         </select>
-        <button id="queryBusRoutesButton" type="submit">Find Routes</button>
-        <h3 id="selectedRoutes">selected routes: all</h3>
+        <br>
+        Destination: <input type="text" id="destInput" placeholder=""> <br><br>
+        <button id="queryRoutesButton" type="submit">Find Routes</button>
+        <h3 id="selectedRoutes">Selected Routes: All</h3>
     </div>
-    <table id="busRouteTable" border="1">
+    <table id="routeTable" border="1">
         <thead>
             <tr>
                 <th>Route ID (rid)</th>
-                <th>Route Number</th>
+                <th>Destination</th>
 
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-
-    <h2> Train Lines </h2>
-        <!-- <div>
-            Select Train Line(s): 
-            <select id="selectTrainLines" required multiple size="10">
-                <option value="All">All</option>
-            </select>
-            <button id="queryTrainLinesButton" type="submit">Find Lines</button>
-            <h3 id="selectedLines">selected lines: all</h3>
-        </div> -->
-        <table id="trainLineTable" border="1">  
-        <thead>
-            <tr>
-                <th>Route ID (rid)</th>
-                <th>Line Name</th>
-                <th>Update</th>
             </tr>
         </thead>
         <tbody>
@@ -55,26 +34,62 @@
 
     <br><hr><br> <!-- ========================================================================= -->
 
-    <h3> Bus Stops for Route: </h3>
-    <form id="busStopsTable">
-        route_num: <select id="routeNumForBusStops" required>
-            <option value="" disabled selected>(Select Route)</option>
+    <!-- <h2> Routes </h2>
+    <div>
+        Select Route Number(s): 
+        <select id="selectRoutes" required multiple size="10">
+            <option value="All">All</option>
         </select>
+        <br>
+        Destination: <input type="text" id="destInput" placeholder=""> <br><br>
+        <button id="queryRoutesButton" type="submit">Find Routes</button>
+        <h3 id="selectedRoutes">Selected Routes: All</h3>
+    </div>
+    <table id="routeTable" border="1">
+        <thead>
+            <tr>
+                <th>Route ID (rid)</th>
+                <th>Destination</th>
 
-        <button type="submit"> insert </button> <br>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <br><hr><br> -->
+
+    <h3>Bus Stops on Route: </h3>
+    <form>
+        rid: <select id="routeIDoptions" required>
+            <option value="All" disabled selected>(Select Route)</option>
+        </select>
+        <button id="busStopsButton"> Get Stops </button>
+
+        <table id="busStopsTable">
+            <thead>
+                <tr>
+                    <th>stop ID</th>
+                    <th>rid</th>
+                    <th>sched. time</th>
+                    <th>route pos.</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <table id="busStopCountTable">
+            <thead>
+                <tr>
+                    <th>rid</th>
+                    <th># of Stops</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
     </form>
     <div id="insertResultMsg"></div>
-
-
-    <h3> Train Lines </h3>
-    <form id="insertClientTable">
-        rid: <input type="number" id="insert_rid" placeholder="enter Route ID" required> <br><br>
-        dest: <input type="number" id="insert_rid" placeholder="enter Route ID" required> <br><br>
-
-        <button type="submit"> insert </button> <br>
-    </form>
-    <div id="insertResultMsg"></div>
-
 
 
 

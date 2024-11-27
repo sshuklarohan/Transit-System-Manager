@@ -113,6 +113,20 @@ async function fetchBusRouteTableFromDb() {
     });
 }
 
+async function fetchBusRouteStopsAtFromDb( route_id ) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT * FROM BUSROUTESTOPSAT WHERE rid =:route_id ORDER BY route_pos DESC`,
+            [route_id],
+            { autoCommit: true }
+        );
+        return result.rows;
+    }).catch((error) => {
+        console.log(error.message);
+        return [];
+    });
+}
+
 async function fetchTrainLineTableFromDb() {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute('SELECT * FROM TRAINLINE');
@@ -194,20 +208,31 @@ async function countDemotable() {
 }
 
 
-async function querySelectBusRouteTable(routeNumbers) {
-    console.log(routeNumbers, " in appService is type ", typeof(routeNumbers));
+async function querySelectRouteTable(rid, dest) {
+    console.log(rid, " in appService is type ", typeof(rid));
+    console.log(dest, " in appService is type ", typeof(dest));
 
-    let query = "SELECT * FROM BUSROUTE WHERE ";
+    let query = "SELECT * FROM ROUTE";
     const binds = {};
 
-    const conditions = routeNumbers.map((num, index) => {
-        const bindKey = `route_num${index + 1}`; 
-        binds[bindKey] = num; 
-        return `ROUTE_NUM = :${bindKey}`; 
-    });
+    if (rid[0] !== "All") {
+        query += " WHERE (";
+        const conditions = rid.map((num, index) => {
+            const bindKey = `rid${index + 1}`; // Dynamic bind key
+            binds[bindKey] = num; // Add to binds object
+            return `rid = :${bindKey}`; // Add bind variable to condition
+        });
+        query += conditions.join(" OR ");
+        query += ")";
+    }
 
-    // Join conditions with OR
-    query += conditions.join(" OR ");
+    if (dest !== "") {
+        query += rid[0] !== "All" ? " AND " : " WHERE ";
+        query += `destination = :dest`;
+        binds["dest"] = dest; // Add destination to binds
+    }
+
+    console.log(query, "binds ", binds);
 
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(query, binds);
@@ -244,12 +269,50 @@ async function querySelectTrainLineTable(lineNames) {
 
 async function groupCountBusStops() {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute(`SELECT COUNT(*) FROM BUSROUTESTOPSAT GROUP BY rid`,
+        const result = await connection.execute(
+            `SELECT RID, COUNT(*) FROM BUSROUTESTOPSAT GROUP BY rid ORDER BY rid`
         );
         return result.rows;
     }).catch((error) => {
         console.error("Error:", error.message);
         return [];
+    });
+}
+
+async function updateBusRoutePos(rid, pos) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`UPDATE BUSROUTESTOPSAT SET route_pos=:pos WHERE rid=:rid`,
+            [pos, rid],
+            { autoCommit: true }
+        );
+
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch(() => {
+        return false;
+    });
+}
+
+async function updateBusTime(rid, old, time) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`UPDATE BUSROUTESTOPSAT SET sched_time=:time WHERE rid=:rid AND sched_time=:old`,
+            [time, rid, old],
+            { autoCommit: true }
+        );
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch(() => {
+        return false;
+    });
+}
+
+async function updateBusPos(rid, old, pos) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`UPDATE BUSROUTESTOPSAT SET route_pos=:pos WHERE rid=:rid AND route_pos=:old`,
+            [pos, rid, old],
+            { autoCommit: true }
+        );
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch(() => {
+        return false;
     });
 }
 
@@ -259,13 +322,17 @@ module.exports = {
     fetchClientTableFromDb,
     fetchRoutesTableFromDb,
     fetchBusRouteTableFromDb,
+    fetchBusRouteStopsAtFromDb,
     fetchTrainLineTableFromDb,
+    updateBusRoutePos,
+    updateBusTime,
+    updateBusPos,
     initiateDemotable, 
     insertDemotable,
     insertClientTable, 
     updateNameDemotable, 
     countDemotable,
-    querySelectBusRouteTable,
+    querySelectRouteTable,
     querySelectTrainLineTable,
     groupCountBusStops
 };
