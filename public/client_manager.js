@@ -1,6 +1,5 @@
 
 //fetch client data and display
-clients = []
 
 
 
@@ -17,13 +16,12 @@ async function fetchAndDisplayClients() {
     const responseData = await response.json();
     const tableContent = responseData.data;
 
-    console.log(tableContent);
-
     // Always clear old, already fetched data before new fetching process.
     if (tableBody) {
         tableBody.innerHTML = '';
-        clients = []
     }
+
+    let clients = [];
 
     tableContent.forEach(user => {
         const row = tableBody.insertRow();
@@ -37,7 +35,9 @@ async function fetchAndDisplayClients() {
         });
     });
 
-    updateUserSelect();
+    console.log("clients" + clients);
+
+    updateUserSelect(clients);
 }
 
 async function fetchAndDisplayPayments() {
@@ -54,7 +54,6 @@ async function fetchAndDisplayPayments() {
     // Always clear old, already fetched data before new fetching process.
     if (tableBody) {
         tableBody.innerHTML = '';
-        clients = []
     }
 
     tableContent.forEach(user => {
@@ -62,10 +61,31 @@ async function fetchAndDisplayPayments() {
         user.forEach((field, index) => {
             const cell = row.insertCell(index);
             cell.textContent = field;
+        });
+    });
+}
 
-            if(index === 0){
-                clients.push(field);
-            }
+async function fetchAndDisplayEveryScanner() {
+    const tableElement = document.getElementById('everyScannerTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/everyScannerTable', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+    const tableContent = responseData.data;
+
+    // Always clear old, already fetched data before new fetching process.
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    tableContent.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
         });
     });
 }
@@ -88,10 +108,12 @@ async function fetchAndDisplayFares() {
     }
 
     const proj = selectedOptions.join(", ");
+    console.log("compassid:" + id);
+    console.log("selectvals" + proj);
 
 
     const response = await fetch('/fareTable', {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -104,16 +126,20 @@ async function fetchAndDisplayFares() {
     const responseData = await response.json();
     const tableContent = responseData.data;
 
+    console.log("repsponsedata"+ responseData);
+
     // add all cols to thing
     if(headerRow){
         headerRow.innerHTML = '';
     }
 
     selectedOptions.forEach(opt => {
+        let result = opt.includes('.') ? opt.split('.')[1] : opt;
         const newHeader = document.createElement('th');
-        newHeader.textContent = opt.textContent;
+        newHeader.textContent = result;
         headerRow.appendChild(newHeader); 
     });
+
 
     if (tableBody) {
         tableBody.innerHTML = '';
@@ -129,11 +155,14 @@ async function fetchAndDisplayFares() {
 }
 
 
-function updateUserSelect() {
+function updateUserSelect(clients) {
     const selectelm = document.getElementById("selectCompass_Id");
     selectelm.innerHTML = "";
 
-    for(let c in clients){
+    console.log("clients in user select" + clients);
+
+    for(let c of clients){
+        console.log(c);
         const option = document.createElement('option');
         option.value = c;
         option.textContent = c;
@@ -159,7 +188,7 @@ async function insertClient(event) {
     event.preventDefault();
 
     const idValue = document.getElementById('insertCompass_Id').value;
-    const dobValue = document.getElementById('insertDOB').value;
+    let dobValue = document.getElementById('insertDOB').value;
 
     if(dobValue > 2024 || dobValue < 1930){
         alert('Invalid DOB');
@@ -194,25 +223,25 @@ async function removeClient(){
         return;
     }
 
-
     const response = await fetch('/removeClient', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            compass_id: idValue,
+            compass_id: id,
         })
     });
 
+    const responseData = await response.json();
+    const messageElement = document.getElementById('insertResultMsg');
+
     if (responseData.success) {
-        messageElement.textContent = "Data removed successfully!";
+        messageElement.textContent = "Data inserted successfully!";
         fetchAndDisplayClients();
     } else {
-        messageElement.textContent = "Error removing data!";
+        messageElement.textContent = "Error inserting data!";
     }
-
-
 
 }
 
@@ -221,5 +250,6 @@ window.onload = function() {
     document.getElementById("ViewFaresBtn").addEventListener("click", fetchAndDisplayFares);
     document.getElementById("DeleteClientBtn").addEventListener("click",removeClient);
     document.getElementById("insertClientTable").addEventListener("submit", insertClient);
+    document.getElementById("everyScannerTableBtn").addEventListener("click", fetchAndDisplayEveryScanner);
     document.getElementById("paymentTableBtn").addEventListener("click", fetchAndDisplayPayments);
 };
