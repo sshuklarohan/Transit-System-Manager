@@ -26,44 +26,31 @@
     <h2> Add Clients </h2>
     <form id="insertClientTable">
         Compass_ID: <input type="number" id="insertCompass_Id" placeholder="Enter compass_ID" required> <br><br>
-        Date of Birth: <input type="number" id="insertDOB" placeholder="YYYY" required><br><br>
+        Date of Birth: <select id="insertDOB" required>
+            <option value="" disabled selected>(Select Year)</option>
+        </select> <br><br>
+
         <button type="submit"> insert </button> <br>
     </form>
     <div id="insertResultMsg"></div>
 
     <br><hr><br> <!-- ===================================================================== -->
-    
-    <select id="selectCompass_Id" required>
-        <option value="" disabled selected>(Select Compass_ID)</option>
-    </select>
-    <button id="ViewFaresBtn" type="button">ViewFares</button>
-        <button id="DeleteClientBtn" type="button">RemoveClient</button>
-        <label for="projections">(ctrl/cmd + click selections):</label>
-        <select id="projections" multiple size="5">
-        <option value="date_time">Date_time</option>
-        <option value="fare_type">fare_type</option>
-        <option value="scan_id">scanner ID</option>
-        <option value="stat_id">Station ID</option>
-        <option value="bus_id">Bus ID</option>
-        </select>
-        <br><br>
-    <br><hr><br> <!-- ===================================================================== -->
 
     <h2>Fares</h2>
+    Select Client: <select id="selectCompass_Id" required>
+        <option value="" disabled selected>(Select Compass_ID)</option>
+    </select> <br><br>
 
-    
     <table id="fareTable" border="1">
         <thead>
-            <tr id="headerRow">
-                <th>nothing</th>
+            <tr>
+                <th>date_time</th>
+                <th>fare_type</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
     </table>
-
-
-
 
 
 
@@ -71,20 +58,6 @@
 
     <br><hr><br> <!-- ===================================================================== -->
 
-    <h2>Aggregations</h2>
-
-    Total spending of clients who have more than 1 paid fare: <button id="paymentTableBtn" type="button">view</button>
-    <br><br>
-    <table id="paymentTable" border="1">
-        <thead>
-            <tr>
-                <th>compass_ID</th>
-                <th>total ($)</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
 
     <script src="client_manager.js"></script>
     
