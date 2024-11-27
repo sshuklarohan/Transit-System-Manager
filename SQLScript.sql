@@ -92,6 +92,7 @@ CREATE TABLE BusRoute (
 CREATE TABLE BusRouteStopsAt (
     stop_id INTEGER,
     rid INTEGER,
+	sched_time VARCHAR(255) NOT NULL UNIQUE,
     route_pos INTEGER NOT NULL,
     PRIMARY KEY (stop_id, rid),
     FOREIGN KEY (rid) REFERENCES Route(rid) ON DELETE CASCADE,
@@ -234,21 +235,19 @@ INSERT INTO BusStop (stop_id, address) VALUES (5, 'W Pender St @ W Granville St'
 INSERT INTO BusStop (stop_id, address) VALUES (6, 'Powell St @ Commercial Dr');
 INSERT INTO BusStop (stop_id, address) VALUES (7, 'E Broadway @ Clark Dr');
 
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (1, 10, 1);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (2, 10, 2);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (3, 10, 3);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (1, 20, 3);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (6, 20, 2);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (7, 20, 1);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (4, 30, 1);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (5, 30, 2);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (3, 40, 1);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (2, 40, 2);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (1, 50, 3);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (6, 50, 2);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (4, 50, 1);
-
-
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (1, 10, '08:01', 1);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (2, 10, '08:09', 2);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (3, 10, '08:15', 3);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (1, 20, '10:01', 3);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (6, 20, '09:51', 2);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (7, 20, '09:45', 1);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (4, 30, '16:21', 1);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (5, 30, '16:41', 2);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (3, 40, '16:35', 1);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (2, 40, '16:52', 2);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (1, 50, '20:01', 3);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (6, 50, '20:17', 2);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (4, 50, '20:37', 1);
 
 
 INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2024');
@@ -411,6 +410,7 @@ INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 2,'02/01/2024 
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (4, 3,'01/05/2024 08:00');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 4,'01/06/2024 12:00');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 5,'02/03/2024 12:50');
+
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (1, 6,'01/01/2024 12:01');
 
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (1, 6,'01/01/2024 12:00');
@@ -427,5 +427,4 @@ INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (11, 6,'01/11/2024
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (12, 6,'01/12/2024 12:00');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (13, 6,'02/01/2024 12:00');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (14, 6,'03/01/2024 12:00');
-
 
