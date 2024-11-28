@@ -440,11 +440,6 @@ INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/12/2024 12:
 INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'02/01/2024 12:00','zone 1');
 INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'03/01/2024 12:00','zone 1');
 
-INSERT INTO Bus (bus_id, bus_size) VALUES (1, 47);
-INSERT INTO Bus (bus_id, bus_size) VALUES (2, 47);
-INSERT INTO Bus (bus_id, bus_size) VALUES (3, 47);
-INSERT INTO Bus (bus_id, bus_size) VALUES (4, 47);
-
 INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (1,null,1);
 INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (2,null,1);
 INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (3,null,2);
@@ -467,9 +462,7 @@ INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 2,'02/01/2024 
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (4, 3,'01/05/2024 08:00');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 4,'01/06/2024 12:00');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 5,'02/03/2024 12:50');
-
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (1, 6,'01/01/2024 12:01');
-
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (1, 6,'01/01/2024 12:00');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 6,'01/02/2024 12:00');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (3, 6,'01/03/2024 12:00');

@@ -161,13 +161,27 @@ async function countDemotable() {
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.
 window.onload = function() {
-    checkDbConnection();
-    fetchTableData();
-    document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
-    document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
-    document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
+
     document.getElementById("countDemotable").addEventListener("click", countDemotable);
+    // checkDbConnection();
+    // fetchTableData();
+    // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
+    // document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
+    // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
+    // document.getElementById("countDemotable").addEventListener("click", countDemotable);
 };
+
+function redirectRoute() {
+    window.location.href = "/routes_manager.html";
+}
+
+function redirectClient() {
+    window.location.href = "/client_manager.html";
+}
+
+function redirectEmployees() {
+    window.location.href = "/emp_veh_manager.html";
+}
 
 // General function to refresh the displayed table data. 
 // You can invoke this after any table-modifying operation to keep consistency.
