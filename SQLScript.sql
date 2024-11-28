@@ -96,7 +96,8 @@ CREATE TABLE BusRouteStopsAt (
     route_pos INTEGER NOT NULL,
     PRIMARY KEY (stop_id, rid),
     FOREIGN KEY (rid) REFERENCES Route(rid) ON DELETE CASCADE,
-    FOREIGN KEY (stop_id) REFERENCES BusStop(stop_id) ON DELETE CASCADE
+    FOREIGN KEY (stop_id) REFERENCES BusStop(stop_id) ON DELETE CASCADE,
+	UNIQUE (rid, route_pos)
 );
 
 
@@ -180,6 +181,52 @@ CREATE TABLE ValidateFare(
 );
 
 DELETE FROM Route;
+INSERT INTO Driver (staff_id, name, seniority) VALUES (1, 'Sabrina Lou', 'Junior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (2, 'Freddi Li','Junior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (3, 'Rohan Shukla', 'Junior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (4, 'Rachel Pottinger', 'Senior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (5, 'Steve Wolfman', 'Senior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (6, 'Alan Turing', 'Junior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (7, 'Edgar Codd', 'Junior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (8, 'John von Neumann', 'Junior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (9, 'Taylor Swift', 'Senior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (10, 'Porter Robinson', 'Senior');
+
+INSERT INTO BusDriver (staff_id) VALUES (1);
+INSERT INTO BusDriver (staff_id) VALUES (2);
+INSERT INTO BusDriver (staff_id) VALUES (3);
+INSERT INTO BusDriver (staff_id) VALUES (4);
+INSERT INTO BusDriver (staff_id) VALUES (5);
+
+INSERT INTO TrainDriver (staff_id) VALUES (6);
+INSERT INTO TrainDriver (staff_id) VALUES (7);
+INSERT INTO TrainDriver (staff_id) VALUES (8);
+INSERT INTO TrainDriver (staff_id) VALUES (9);
+INSERT INTO TrainDriver (staff_id) VALUES (10);
+
+INSERT INTO Bus (bus_id, bus_size) VALUES (1, 47);
+INSERT INTO Bus (bus_id, bus_size) VALUES (2, 70);
+INSERT INTO Bus (bus_id, bus_size) VALUES (3, 50);
+INSERT INTO Bus (bus_id, bus_size) VALUES (4, 64);
+INSERT INTO Bus (bus_id, bus_size) VALUES (5, 24);
+
+INSERT INTO Train (train_id, train_size) VALUES (1, 200);
+INSERT INTO Train (train_id, train_size) VALUES (2, 250);
+INSERT INTO Train (train_id, train_size) VALUES (3, 300);
+INSERT INTO Train (train_id, train_size) VALUES (4, 350);
+INSERT INTO Train (train_id, train_size) VALUES (5, 400);
+
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (1, 1);
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (2, 2);
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (3, 3);
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (4, 4);
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (5, 5);
+
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (1, 6);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (2, 7);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (3, 8);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (4, 9);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (5, 10);
 
 INSERT INTO Route (rid, destination) VALUES (10, 'Downtown');
 INSERT INTO Route (rid, destination) VALUES (20, 'UBC');
@@ -248,150 +295,14 @@ INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (1, 50,
 INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (6, 50, '20:17', 2);
 INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (4, 50, '20:37', 1);
 
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (1, 10);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (2, 20);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (3, 30);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (4, 40);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (5, 50);
 
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2024');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2023');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2022');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2021');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2020');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2019');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2018');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2017');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2016');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2015');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2014');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2013');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2012');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('teen','2011');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('teen','2010');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('teen','2009');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('teen','2008');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('teen','2007');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('teen','2006');
-INSERT INTO RIDER2 (rider_type,dob) VALUES ('teen','2005');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '2004');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '2003');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '2002');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '2001');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '2000');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1999');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1998');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1997');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1996');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1995');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1994');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1993');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1992');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1991');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1990');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1989');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1988');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1987');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1986');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1985');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1984');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1983');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1982');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1981');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1980');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1979');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1978');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1977');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1976');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1975');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1974');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1973');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1972');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1971');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1970');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1969');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1968');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1967');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1966');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1965');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1964');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1963');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1962');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1961');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1960');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1959');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1958');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1957');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1956');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1955');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('adult', '1954');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1953');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1952');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1951');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1950');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1949');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1948');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1947');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1946');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1945');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1944');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1943');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1942');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1941');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1940');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1939');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1938');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1937');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1936');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1935');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1934');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1933');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1932');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1931');
-INSERT INTO RIDER2 (rider_type, dob) VALUES ('senior', '1930');
-
-INSERT INTO RIDER1 (compass_id,dob) VALUES (1, '1990');
-INSERT INTO RIDER1 (compass_id,dob) VALUES (2, '2022');
-INSERT INTO RIDER1 (compass_id,dob) VALUES (3, '1950');
-INSERT INTO RIDER1 (compass_id,dob) VALUES (4, '1989');
-INSERT INTO RIDER1 (compass_id,dob) VALUES (5, '2000');
-INSERT INTO RIDER1 (compass_id,dob) VALUES (6, '2006');
-
-INSERT INTO PaidFares2(fare_type, price) VALUES ('zone 1', 2.00);
-INSERT INTO PaidFares2(fare_type, price) VALUES ('zone 2', 1.50);
-INSERT INTO PaidFares2(fare_type, price) VALUES ('zone 3', 1.25);
-INSERT INTO PaidFares2(fare_type, price) VALUES ('zone 4', 1.00);
-INSERT INTO PaidFares2(fare_type, price) VALUES ('multi zone', 3.00);
-
-
-INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (1,'01/01/2024 12:00','zone 1');
-INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (1,'01/01/2024 13:00','zone 1');
-INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (2,'02/01/2024 11:00','zone 2');
-INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (3,'01/05/2024 08:00','zone 3');
-INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (4,'01/06/2024 12:00','zone 4');
-INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (5,'02/03/2024 12:50','multi zone');
-INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (6,'01/01/2024 12:01','zone 1');
-
-INSERT INTO Bus (bus_id, bus_size) VALUES (1, 47);
-INSERT INTO Bus (bus_id, bus_size) VALUES (2, 47);
-INSERT INTO Bus (bus_id, bus_size) VALUES (3, 47);
-INSERT INTO Bus (bus_id, bus_size) VALUES (4, 47);
-
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (1,null,1);
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (2,null,1);
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (3,null,2);
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (4,null,3);
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (5,null,4);
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (6,null,null);
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (7,1,null);
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (8,1,null);
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (9,2,null);
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (10,3,null);
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (11,4,null);
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (12,5,null);
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (13,6,null);
-INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (14,7,null);
-
-
-INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (1, 1,'01/01/2024 12:00');
-INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (1, 1,'01/01/2024 13:00');
-INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 2,'02/01/2024 11:00');
-INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (4, 3,'01/05/2024 08:00');
-INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 4,'01/06/2024 12:00');
-INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 5,'02/03/2024 12:50');
-INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (1, 6,'01/01/2024 12:01');
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (1, 101);
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (2, 201);
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (3, 301);
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (4, 401);
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (5, 501);
