@@ -122,6 +122,35 @@ router.get('/count-demotable', async (req, res) => {
     }
 });
 
+router.get('/employees-vehicles', async (req, res) => {
+    const tableContent = await appService.fetchEmployeesVehicles();
+    if (tableContent) {
+        res.json({ data: tableContent });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/routes', async (req, res) => {
+    const routes = await appService.fetchRoutes();
+    if (routes) {
+        res.json({ data: routes });
+    } else {
+        res.status(500).json({ success: false });
+    }
+})
+
+router.post('/drivers-routes', async (req, res) => {
+    const { routeNum } = req.body;
+    const driver = await appService.fetchDriver(routeNum);
+    console.log(driver)
+    if (driver) {
+        res.json({ data: driver });
+          } else {
+        res.status(500).json({ success: false });
+    }
+});
+
 router.post('/query-select-Route', async (req, res) => {
     const { rid, destination } = req.body;
     const tableContent = await appService.querySelectRouteTable(rid, destination);
@@ -145,11 +174,15 @@ router.post("/update-bus-time", async (req, res) => {
     const updateResult = await appService.updateBusTime(rid, old, time);
     if (updateResult) {
         res.json({ success: true });
+
+router.get('/max-clients', async (req, res) => {
+    const clients = await appService.fetchMaxClientsScanner();
+    if (clients) {
+        res.json({ data: clients });
     } else {
         res.status(500).json({ success: false });
     }
 });
-
 router.post("/update-bus-pos", async (req, res) => {
     const { rid, old, pos } = req.body;
     const updateResult = await appService.updateBusPos(rid, old, pos);
@@ -159,6 +192,5 @@ router.post("/update-bus-pos", async (req, res) => {
         res.status(500).json({ success: false });
     }
 });
-
 
 module.exports = router;

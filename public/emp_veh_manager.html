@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Employee Vehicle Manager</title>
+</head>
+<body>
+    <h2>Employees and Assigned Vehicles</h2>
+    <table id="empvehtable" border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Seniority</th>
+                <th>Vehicle ID</th>
+                <th>Vehicle Size</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <br><hr><br>
+
+    <h2>Find Drivers by Route</h2>
+    <p>Select a route from the dropdown menu to see which drivers are driving there.</p>
+    <select id="routeDropdown">
+        <option value="">Loading routes...</option>
+    </select>
+
+    <h3>Drivers on Selected Route:</h3>
+    <table id="driversResultTable" border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Seniority</th>
+                <th>Route Number</th>
+                <th>Route Destination</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <br><hr><br>
+
+    <h2>Find Scanner with Max Clients</h2>
+    <div>
+        <button id="fetchMaxClientsButton">Go</button>
+        <p id="maxClientScannerResultMsg"></p>
+    </div>    
+
+    <script src="emp_veh_manager.js"></script>
+</body>
+</html>

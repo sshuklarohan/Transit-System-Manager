@@ -1,3 +1,4 @@
+
 DROP TABLE ValidateFare;
 DROP TABLE ScannerHas;
 DROP TABLE PaidFares1;
@@ -20,7 +21,6 @@ DROP TABLE TrainDriver;
 DROP TABLE BusDriver;
 DROP TABLE Driver;
 DROP TABLE Route;
-
 
 CREATE TABLE Route (
     rid INTEGER,
@@ -180,8 +180,6 @@ CREATE TABLE ValidateFare(
 	FOREIGN KEY(compass_id,date_time) REFERENCES PaidFares1(compass_id,date_time) ON DELETE CASCADE
 );
 
-
-DELETE FROM Route;
 INSERT INTO Driver (staff_id, name, seniority) VALUES (1, 'Sabrina Lou', 'Junior');
 INSERT INTO Driver (staff_id, name, seniority) VALUES (2, 'Freddi Li','Junior');
 INSERT INTO Driver (staff_id, name, seniority) VALUES (3, 'Rohan Shukla', 'Junior');
@@ -234,6 +232,7 @@ INSERT INTO Route (rid, destination) VALUES (20, 'UBC');
 INSERT INTO Route (rid, destination) VALUES (30, 'Downtown');
 INSERT INTO Route (rid, destination) VALUES (40, 'Broadway');
 INSERT INTO Route (rid, destination) VALUES (50, 'Broadway');
+
 INSERT INTO Route (rid, destination) VALUES (101, 'Downtown');
 INSERT INTO Route (rid, destination) VALUES (201, 'UBC');
 INSERT INTO Route (rid, destination) VALUES (301, 'Airport');
