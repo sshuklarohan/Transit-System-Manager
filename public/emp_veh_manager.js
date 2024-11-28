@@ -52,21 +52,27 @@ async function populateRouteDropdown() {
 }
 
 async function getScannerWithMaxClients() {
-    const messageElement = document.getElementById('maxClientScanner');
+    const tableElement = document.getElementById('maxClientsTable');
+    const tableBody = tableElement.querySelector('tbody');
+
     const response = await fetch('/max-clients', {
         method: 'GET'
     });
 
     const responseData = await response.json();
-    
-    messageElement.textContent = '';
+    const tableContent = responseData.data;
 
-    if (responseData.length > 0) {
-        const { scan_id, client_count } = responseData[0];
-        messageElement.textContent = 'Scanner ID ${scan_id} has the maximum clients (${client_count}).';
-    } else {
-        messageElement.textContent = 'No scanners found.';
+    if (tableBody) {
+        tableBody.innerHTML = '';
     }
+
+    tableContent.forEach(scan => {
+        const row = tableBody.insertRow();
+        scan.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        })
+    })
 }
 
 async function fetchDriversByRoute() {
@@ -103,6 +109,7 @@ async function fetchDriversByRoute() {
             cell.textContent = field;
         });
     })
+
 
     // const resultsContainer = document.getElementById('driversResult');
     // resultsContainer.innerHTML = '';
