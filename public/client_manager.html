@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <h2>Show Clients</h2>
+    <table id="clientTable" border="1">
+        <thead>
+            <tr>
+                <th>compass_ID</th>
+                <th>dob</th>
+                <th>rider_type</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <h2> Add Clients </h2>
+    <form id="insertClientTable">
+        Compass_ID: <input type="number" id="insertCompass_Id" placeholder="Enter compass_ID" required> <br><br>
+        Date of Birth: <select id="insertDOB" required>
+            <option value="" disabled selected>(Select Year)</option>
+        </select> <br><br>
+
+        <button type="submit"> insert </button> <br>
+    </form>
+    <div id="insertResultMsg"></div>
+
+    <br><hr><br> <!-- ===================================================================== -->
+    
+    <h2> Client Select and Actions </h2>
+    <select id="selectCompass_Id" required>
+        <option value="" disabled selected>(Select Compass_ID)</option>
+    </select>
+    <button id="ViewFaresBtn" type="button">ViewFares</button>
+        <button id="DeleteClientBtn" type="button">RemoveClient</button>
+        <label for="projections">(ctrl/cmd + click selections):</label>
+        <select id="projections" multiple size="5">
+        <option value="p1.date_time">Date_time</option>
+        <option value="fare_type">fare_type</option>
+        <option value="s.scan_id">scanner ID</option>
+        <option value="stat_id">Station ID</option>
+        <option value="bus_id">Bus ID</option>
+        </select>
+        <br><br>
+    <br><hr><br> <!-- ===================================================================== -->
+
+    <h2>Fares</h2>
+
+    <table id="fareTable" border="1">
+        <thead>
+            <tr id="headerRow">
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+
+    <br><hr><br> <!-- ===================================================================== -->
+
+
+    <br><br>
+
+
+    Clients who have used every scanner: <button id="everyScannerTableBtn" type="button">view</button>
+    <br><br>
+    <table id="everyScannerTable" border="1">
+        <thead>
+            <tr>
+                <th>compass_ID</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+
+    <script src="client_manager.js"></script>
+    
+</body>
+</html>
