@@ -138,7 +138,7 @@ router.get('/routes', async (req, res) => {
     } else {
         res.status(500).json({ success: false });
     }
-})
+});
 
 router.post('/drivers-routes', async (req, res) => {
     const { routeNum } = req.body;
@@ -174,6 +174,10 @@ router.post("/update-bus-time", async (req, res) => {
     const updateResult = await appService.updateBusTime(rid, old, time);
     if (updateResult) {
         res.json({ success: true });
+    }else {
+        res.status(500).json({ success: false });
+    }
+});
 
 router.get('/max-clients', async (req, res) => {
     const clients = await appService.fetchMaxClientsScanner();
@@ -183,6 +187,7 @@ router.get('/max-clients', async (req, res) => {
         res.status(500).json({ success: false });
     }
 });
+
 router.post("/update-bus-pos", async (req, res) => {
     const { rid, old, pos } = req.body;
     const updateResult = await appService.updateBusPos(rid, old, pos);

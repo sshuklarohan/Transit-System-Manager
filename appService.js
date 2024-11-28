@@ -415,7 +415,7 @@ module.exports = {
     fetchEmployeesVehicles,
     fetchRoutes,
     fetchDriver,
-    fetchMaxClientsScanner
+    fetchMaxClientsScanner,
     querySelectRouteTable,
     querySelectTrainLineTable,
     groupCountBusStops,
