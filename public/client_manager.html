@@ -35,17 +35,29 @@
     <div id="insertResultMsg"></div>
 
     <br><hr><br> <!-- ===================================================================== -->
+    
+    <h2> Client Select and Actions </h2>
+    <select id="selectCompass_Id" required>
+        <option value="" disabled selected>(Select Compass_ID)</option>
+    </select>
+    <button id="ViewFaresBtn" type="button">ViewFares</button>
+        <button id="DeleteClientBtn" type="button">RemoveClient</button>
+        <label for="projections">(ctrl/cmd + click selections):</label>
+        <select id="projections" multiple size="5">
+        <option value="p1.date_time">Date_time</option>
+        <option value="fare_type">fare_type</option>
+        <option value="s.scan_id">scanner ID</option>
+        <option value="stat_id">Station ID</option>
+        <option value="bus_id">Bus ID</option>
+        </select>
+        <br><br>
+    <br><hr><br> <!-- ===================================================================== -->
 
     <h2>Fares</h2>
-    Select Client: <select id="selectCompass_Id" required>
-        <option value="" disabled selected>(Select Compass_ID)</option>
-    </select> <br><br>
 
     <table id="fareTable" border="1">
         <thead>
-            <tr>
-                <th>date_time</th>
-                <th>fare_type</th>
+            <tr id="headerRow">
             </tr>
         </thead>
         <tbody>
@@ -53,10 +65,23 @@
     </table>
 
 
-
-
-
     <br><hr><br> <!-- ===================================================================== -->
+
+
+    <br><br>
+
+
+    Clients who have used every scanner: <button id="everyScannerTableBtn" type="button">view</button>
+    <br><br>
+    <table id="everyScannerTable" border="1">
+        <thead>
+            <tr>
+                <th>compass_ID</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
 
     <script src="client_manager.js"></script>

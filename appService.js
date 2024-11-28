@@ -87,7 +87,36 @@ async function fetchDemotableFromDb() {
 
 async function fetchClientTableFromDb() {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT compass_id, dob, rider_type FROM RIDER1 r1, RIDER2 r2 WHERE r1.dob = r2.dob');
+        const result = await connection.execute('SELECT r1.compass_id,r1.dob, r2.rider_type FROM RIDER1 r1, RIDER2 r2 WHERE r1.dob = r2.dob');
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
+async function fetchEveryScanerTableFromDb() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT r.compass_id FROM RIDER1 r WHERE NOT EXISTS (SELECT s.scan_id FROM ScannerHas s WHERE NOT EXISTS (SELECT v.compass_id FROM ValidateFare v WHERE v.compass_id = r.compass_id AND v.scan_id = s.scan_id))');
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
+async function fetchPaymentTableFromDb() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT compass_id, SUM(price) FROM PaidFares1 p1, PaidFares2 p2 WHERE p1.fare_type = p2.fare_type GROUP BY compass_id HAVING count(*) > 1');
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
+async function fetchFareTableFromDb(id, sel) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`SELECT ${sel} FROM PaidFares1 p1 JOIN ValidateFare v ON p1.compass_id = v.compass_id AND p1.date_time = v.date_time JOIN ScannerHas s ON v.scan_id = s.scan_id WHERE p1.compass_id = :id`, 
+            [id], 
+            { autoCommit: true });
         return result.rows;
     }).catch(() => {
         return [];
@@ -176,6 +205,19 @@ async function insertClientTable(compass_id, dob) {
         const result = await connection.execute(
             `INSERT INTO RIDER1 (compass_id, dob) VALUES (:compass_id, :dob)`,
             [compass_id, dob],
+            { autoCommit: true }
+        );
+
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch(() => {
+        return false;
+    });
+}
+
+async function removeClient(id) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(`DELETE FROM Rider1 WHERE compass_id = :id`,
+            [id],
             { autoCommit: true }
         );
 
@@ -334,5 +376,9 @@ module.exports = {
     countDemotable,
     querySelectRouteTable,
     querySelectTrainLineTable,
-    groupCountBusStops
+    groupCountBusStops,
+    removeClient,
+    fetchFareTableFromDb,
+    fetchPaymentTableFromDb,
+    fetchEveryScanerTableFromDb
 };

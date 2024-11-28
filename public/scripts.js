@@ -45,6 +45,8 @@ async function fetchAndDisplayUsers() {
         method: 'GET'
     });
 
+    console.log(response);
+
     const responseData = await response.json();
     const demotableContent = responseData.data;
 

@@ -25,6 +25,28 @@ router.get('/clientTable', async (req, res) => {
     res.json({data: tableContent});
 });
 
+router.get('/everyScannerTable', async (req, res) => {
+    const tableContent = await appService.fetchEveryScannerTableFromDb();
+    res.json({data: tableContent});
+});
+
+router.get('/paymentTable', async (req, res) => {
+    const tableContent = await appService.fetchPaymentTableFromDb();
+    res.json({data: tableContent});
+});
+
+router.post('/fareTable', async (req, res) => {
+    const { compass_id, selected } = req.body;
+    const tableContent = await appService.fetchFareTableFromDb(compass_id, selected);
+    res.json({data: tableContent});
+});
+
+router.post('/removeClient', async (req, res) => {
+    const { compass_id } = req.body;
+    const tableContent = await appService.removeClient(compass_id);
+    res.json({data: tableContent});
+});
+
 router.get('/routeTable', async (req, res) => {
     const tableContent = await appService.fetchRoutesTableFromDb();
     res.json({data: tableContent});
