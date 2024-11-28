@@ -165,17 +165,17 @@ INSERT INTO Driver (staff_id, name, seniority) VALUES (8, 'John von Neumann', 'J
 INSERT INTO Driver (staff_id, name, seniority) VALUES (9, 'Taylor Swift', 'Senior');
 INSERT INTO Driver (staff_id, name, seniority) VALUES (10, 'Porter Robinson', 'Senior');
 
-INSERT INTO BusDriver (staff_id, name, seniority) VALUES (1);
-INSERT INTO BusDriver (staff_id, name, seniority) VALUES (2);
-INSERT INTO BusDriver (staff_id, name, seniority) VALUES (3);
-INSERT INTO BusDriver (staff_id, name, seniority) VALUES (4);
-INSERT INTO BusDriver (staff_id, name, seniority) VALUES (5);
+INSERT INTO BusDriver (staff_id) VALUES (1);
+INSERT INTO BusDriver (staff_id) VALUES (2);
+INSERT INTO BusDriver (staff_id) VALUES (3);
+INSERT INTO BusDriver (staff_id) VALUES (4);
+INSERT INTO BusDriver (staff_id) VALUES (5);
 
-INSERT INTO TrainDriver (staff_id, name, seniority) VALUES (6);
-INSERT INTO TrainDriver (staff_id, name, seniority) VALUES (7));
-INSERT INTO TrainDriver (staff_id, name, seniority) VALUES (8);
-INSERT INTO TrainDriver (staff_id, name, seniority) VALUES (9);
-INSERT INTO TrainDriver (staff_id, name, seniority) VALUES (10);
+INSERT INTO TrainDriver (staff_id) VALUES (6);
+INSERT INTO TrainDriver (staff_id) VALUES (7);
+INSERT INTO TrainDriver (staff_id) VALUES (8);
+INSERT INTO TrainDriver (staff_id) VALUES (9);
+INSERT INTO TrainDriver (staff_id) VALUES (10);
 
 INSERT INTO Bus (bus_id, bus_size) VALUES (1, 47);
 INSERT INTO Bus (bus_id, bus_size) VALUES (2, 70);
@@ -191,27 +191,15 @@ INSERT INTO Train (train_id, train_size) VALUES (5, 400);
 
 INSERT INTO DrivesBus (bus_id, staff_id) VALUES (1, 1);
 INSERT INTO DrivesBus (bus_id, staff_id) VALUES (2, 2);
-INSERT INTO DrivesBus (bus_id, staff_id) VALUES (1, 3);
-INSERT INTO DrivesBus (bus_id, staff_id) VALUES (2, 4);
-INSERT INTO DrivesBus (bus_id, staff_id) VALUES (1, 5);
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (3, 3);
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (4, 4);
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (5, 5);
 
-INSERT INTO DrivesTrain (train_id, staff_id) VALUES (1, 1);
-INSERT INTO DrivesTrain (train_id, staff_id) VALUES (2, 2);
-INSERT INTO DrivesTrain (train_id, staff_id) VALUES (1, 3);
-INSERT INTO DrivesTrain (train_id, staff_id) VALUES (2, 4);
-INSERT INTO DrivesTrain (train_id, staff_id) VALUES (1, 5);
-
-INSERT INTO BusAssigned (bus_id, route_id) VALUES (1, 1);
-INSERT INTO BusAssigned (bus_id, route_id) VALUES (2, 2);
-INSERT INTO BusAssigned (bus_id, route_id) VALUES (1, 3);
-INSERT INTO BusAssigned (bus_id, route_id) VALUES (2, 4);
-INSERT INTO BusAssigned (bus_id, route_id) VALUES (1, 5);
-
-INSERT INTO TrainAssigned (train_id, route_id) VALUES (1, 1);
-INSERT INTO TrainAssigned (train_id, route_id) VALUES (2, 2);
-INSERT INTO TrainAssigned (train_id, route_id) VALUES (1, 3);
-INSERT INTO TrainAssigned (train_id, route_id) VALUES (2, 4);
-INSERT INTO TrainAssigned (train_id, route_id) VALUES (1, 5);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (1, 6);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (2, 7);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (3, 8);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (4, 9);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (5, 10);
 
 INSERT INTO Route (rid, destination) VALUES (10, 'Downtown - Pender');
 INSERT INTO Route (rid, destination) VALUES (20, 'UBC - Bus Loop');
@@ -224,14 +212,26 @@ INSERT INTO Route (rid, destination) VALUES (301, 'Airport');
 INSERT INTO Route (rid, destination) VALUES (401, 'Waterfront');
 INSERT INTO Route (rid, destination) VALUES (501, 'Boundary');
 
-INSERT INTO TrainLine (rid, line_name) VALUES (101, 'Green Line');
-INSERT INTO TrainLine (rid, line_name) VALUES (201, 'Red Line');
-INSERT INTO TrainLine (rid, line_name) VALUES (301, 'Blue Line');
-INSERT INTO TrainLine (rid, line_name) VALUES (401, 'Yellow Line');
-INSERT INTO TrainLine (rid, line_name) VALUES (501, 'Purple Line');
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (1, 10);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (2, 20);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (3, 30);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (4, 40);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (5, 50);
+
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (1, 101);
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (2, 201);
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (3, 301);
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (4, 401);
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (5, 501);
 
 INSERT INTO BusRoute (rid, route_num) VALUES (10, 22);
 INSERT INTO BusRoute (rid, route_num) VALUES (20, 84);
 INSERT INTO BusRoute (rid, route_num) VALUES (30, 5);
 INSERT INTO BusRoute (rid, route_num) VALUES (40, 9);
 INSERT INTO BusRoute (rid, route_num) VALUES (50, 99);
+
+INSERT INTO TrainLine (rid, line_name) VALUES (101, 'Green Line');
+INSERT INTO TrainLine (rid, line_name) VALUES (201, 'Red Line');
+INSERT INTO TrainLine (rid, line_name) VALUES (301, 'Blue Line');
+INSERT INTO TrainLine (rid, line_name) VALUES (401, 'Yellow Line');
+INSERT INTO TrainLine (rid, line_name) VALUES (501, 'Purple Line');

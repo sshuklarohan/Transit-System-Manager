@@ -65,22 +65,41 @@ router.get('/count-demotable', async (req, res) => {
 });
 
 router.get('/employees-vehicles', async (req, res) => {
-    const employeesVehicles = await appService.fetchEmployeesVehicles();
-    if(employeesVehicles) {
-        res.json({success: true, data: employeesVehicles });
-    } else {
-        res.status(500).json({success: false });
-    }
-});
-
-router.get('/employees-vehicles/:routeNum', async (req, res) => {
-    const { routeNum } = req.params;
-    const driver = await appService.fetchDriver(routeNum);
-    if (driver) {
-        res.json({ success: true, data: drivers });
+    const tableContent = await appService.fetchEmployeesVehicles();
+    if (tableContent) {
+        res.json({ data: tableContent });
     } else {
         res.status(500).json({ success: false });
     }
 });
+
+router.get('/routes', async (req, res) => {
+    const routes = await appService.fetchRoutes();
+    if (routes) {
+        res.json({ data: routes });
+    } else {
+        res.status(500).json({ success: false });
+    }
+})
+
+router.post('/drivers-routes', async (req, res) => {
+    const { routeNum } = req.body;
+    const driver = await appService.fetchDriver(routeNum);
+    console.log(driver)
+    if (driver) {
+        res.json({ data: driver });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/max-clients', async (req, res) => {
+    const clients = await appService.fetchMaxClientsScanner();
+    if (clients) {
+        res.json({ data: clients });
+    } else {
+        res.status(500).json({ success: false });
+    }
+})
 
 module.exports = router;
