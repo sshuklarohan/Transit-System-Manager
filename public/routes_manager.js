@@ -456,3 +456,7 @@ async function updatePos(route_id, oldPos, pos) {
 //     });
 
 // }
+
+function redirectHome(){
+    window.location.href = "./index.html";
+}
