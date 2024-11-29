@@ -3,7 +3,7 @@ window.onload = function() {
     populateRouteDropdown();
     
     document.getElementById('routeDropdown').addEventListener('change', fetchDriversByRoute);
-    document.getElementById('fetchMaxClientsButton').addEventListener('click', getScannerWithMaxClients);
+    
 };
 
 async function fetchAssignedVehicles() {
@@ -48,30 +48,6 @@ async function populateRouteDropdown() {
         option.value = route[0];
         option.textContent = route[0];
         dropdown.appendChild(option);
-    })
-}
-
-async function getScannerWithMaxClients() {
-    const tableElement = document.getElementById('maxClientsTable');
-    const tableBody = tableElement.querySelector('tbody');
-
-    const response = await fetch('/max-clients', {
-        method: 'GET'
-    });
-
-    const responseData = await response.json();
-    const tableContent = responseData.data;
-
-    if (tableBody) {
-        tableBody.innerHTML = '';
-    }
-
-    tableContent.forEach(scan => {
-        const row = tableBody.insertRow();
-        scan.forEach((field, index) => {
-            const cell = row.insertCell(index);
-            cell.textContent = field;
-        })
     })
 }
 

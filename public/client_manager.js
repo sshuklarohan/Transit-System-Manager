@@ -253,6 +253,31 @@ async function removeClient(){
 
 }
 
+async function getScannerWithMaxClients() {
+    const tableElement = document.getElementById('maxClientsTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/max-clients', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+    const tableContent = responseData.data;
+
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    tableContent.forEach(scan => {
+        const row = tableBody.insertRow();
+        scan.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        })
+    })
+}
+
+
 function redirectHome(){
     window.location.href = "./index.html";
 }
@@ -264,5 +289,6 @@ window.onload = function() {
     document.getElementById("insertClientTable").addEventListener("submit", insertClient);
     document.getElementById("everyScannerTableBtn").addEventListener("click", fetchAndDisplayEveryScanner);
     document.getElementById("paymentTableBtn").addEventListener("click", fetchAndDisplayPayments);
+    document.getElementById('fetchMaxClientsButton').addEventListener('click', getScannerWithMaxClients);
 };
 

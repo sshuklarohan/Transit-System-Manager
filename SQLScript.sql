@@ -485,11 +485,6 @@ INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (3,'01/12/2024 12:
 INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (3,'02/01/2024 12:00','zone 1');
 INSERT INTO PaidFares1(compass_id,date_time,fare_type) VALUES (3,'03/01/2024 12:00','zone 1');
 
-INSERT INTO Bus (bus_id, bus_size) VALUES (1, 47);
-INSERT INTO Bus (bus_id, bus_size) VALUES (2, 47);
-INSERT INTO Bus (bus_id, bus_size) VALUES (3, 47);
-INSERT INTO Bus (bus_id, bus_size) VALUES (4, 47);
-
 INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (1,null,1);
 INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (2,null,1);
 INSERT INTO ScannerHas(scan_id, stat_id,bus_id) VALUES (3,null,2);
