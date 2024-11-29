@@ -1,13 +1,9 @@
 
 //fetch client data and display
 
-
-
 async function fetchAndDisplayClients() {
     const tableElement = document.getElementById('clientTable');
     const tableBody = tableElement.querySelector('tbody');
-
-    console.log("requesting client table");
 
     const response = await fetch('/clientTable', {
         method: 'GET'
@@ -19,6 +15,7 @@ async function fetchAndDisplayClients() {
     // Always clear old, already fetched data before new fetching process.
     if (tableBody) {
         tableBody.innerHTML = '';
+
     }
 
     let clients = [];
@@ -143,6 +140,7 @@ async function fetchAndDisplayFares() {
 
     if (tableBody) {
         tableBody.innerHTML = '';
+
     }
 
     tableContent.forEach(user => {
@@ -190,11 +188,6 @@ async function insertClient(event) {
     const idValue = document.getElementById('insertCompass_Id').value;
     let dobValue = document.getElementById('insertDOB').value;
 
-    if(dobValue > 2024 || dobValue < 1930){
-        alert('Invalid DOB');
-    }
-    dobValue = dobValue.toString();
-
     const response = await fetch('/insert-clientTable', {
         method: 'POST',
         headers: {
@@ -211,10 +204,11 @@ async function insertClient(event) {
 
     if (responseData.success) {
         messageElement.textContent = "Data inserted successfully!";
-        fetchAndDisplayClients();
+        fetchTableData();
     } else {
         messageElement.textContent = "Error inserting data!";
     }
+
 }
 
 async function removeClient(){
@@ -253,3 +247,4 @@ window.onload = function() {
     document.getElementById("everyScannerTableBtn").addEventListener("click", fetchAndDisplayEveryScanner);
     document.getElementById("paymentTableBtn").addEventListener("click", fetchAndDisplayPayments);
 };
+

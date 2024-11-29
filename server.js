@@ -17,7 +17,7 @@ app.use(express.json());             // Parse incoming JSON payloads
 //      you can adjust and use the bellow line of code to
 //      route to send 'DEFAULT_FILE_NAME.html' as default for root URL
 // app.get('/', (req, res) => {
-//     res.sendFile(__dirname + '/public/routes_manager.html');
+//     res.sendFile(__dirname + '/public/main.html');
 // });
 
 
@@ -30,4 +30,3 @@ app.use('/', appController);
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}/`);
 });
-

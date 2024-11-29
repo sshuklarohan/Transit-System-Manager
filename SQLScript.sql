@@ -1,3 +1,4 @@
+
 DROP TABLE ValidateFare;
 DROP TABLE ScannerHas;
 DROP TABLE PaidFares1;
@@ -20,7 +21,6 @@ DROP TABLE TrainDriver;
 DROP TABLE BusDriver;
 DROP TABLE Driver;
 DROP TABLE Route;
-
 
 CREATE TABLE Route (
     rid INTEGER,
@@ -92,10 +92,12 @@ CREATE TABLE BusRoute (
 CREATE TABLE BusRouteStopsAt (
     stop_id INTEGER,
     rid INTEGER,
+	sched_time VARCHAR(255) NOT NULL UNIQUE,
     route_pos INTEGER NOT NULL,
     PRIMARY KEY (stop_id, rid),
     FOREIGN KEY (rid) REFERENCES Route(rid) ON DELETE CASCADE,
-    FOREIGN KEY (stop_id) REFERENCES BusStop(stop_id) ON DELETE CASCADE
+    FOREIGN KEY (stop_id) REFERENCES BusStop(stop_id) ON DELETE CASCADE,
+	UNIQUE (rid, route_pos)
 );
 
 
@@ -178,14 +180,59 @@ CREATE TABLE ValidateFare(
 	FOREIGN KEY(compass_id,date_time) REFERENCES PaidFares1(compass_id,date_time) ON DELETE CASCADE
 );
 
+INSERT INTO Driver (staff_id, name, seniority) VALUES (1, 'Sabrina Lou', 'Junior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (2, 'Freddi Li','Junior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (3, 'Rohan Shukla', 'Junior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (4, 'Rachel Pottinger', 'Senior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (5, 'Steve Wolfman', 'Senior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (6, 'Alan Turing', 'Junior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (7, 'Edgar Codd', 'Junior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (8, 'John von Neumann', 'Junior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (9, 'Taylor Swift', 'Senior');
+INSERT INTO Driver (staff_id, name, seniority) VALUES (10, 'Porter Robinson', 'Senior');
 
-DELETE FROM Route;
+INSERT INTO BusDriver (staff_id) VALUES (1);
+INSERT INTO BusDriver (staff_id) VALUES (2);
+INSERT INTO BusDriver (staff_id) VALUES (3);
+INSERT INTO BusDriver (staff_id) VALUES (4);
+INSERT INTO BusDriver (staff_id) VALUES (5);
+
+INSERT INTO TrainDriver (staff_id) VALUES (6);
+INSERT INTO TrainDriver (staff_id) VALUES (7);
+INSERT INTO TrainDriver (staff_id) VALUES (8);
+INSERT INTO TrainDriver (staff_id) VALUES (9);
+INSERT INTO TrainDriver (staff_id) VALUES (10);
+
+INSERT INTO Bus (bus_id, bus_size) VALUES (1, 47);
+INSERT INTO Bus (bus_id, bus_size) VALUES (2, 70);
+INSERT INTO Bus (bus_id, bus_size) VALUES (3, 50);
+INSERT INTO Bus (bus_id, bus_size) VALUES (4, 64);
+INSERT INTO Bus (bus_id, bus_size) VALUES (5, 24);
+
+INSERT INTO Train (train_id, train_size) VALUES (1, 200);
+INSERT INTO Train (train_id, train_size) VALUES (2, 250);
+INSERT INTO Train (train_id, train_size) VALUES (3, 300);
+INSERT INTO Train (train_id, train_size) VALUES (4, 350);
+INSERT INTO Train (train_id, train_size) VALUES (5, 400);
+
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (1, 1);
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (2, 2);
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (3, 3);
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (4, 4);
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (5, 5);
+
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (1, 6);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (2, 7);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (3, 8);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (4, 9);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (5, 10);
 
 INSERT INTO Route (rid, destination) VALUES (10, 'Downtown');
 INSERT INTO Route (rid, destination) VALUES (20, 'UBC');
 INSERT INTO Route (rid, destination) VALUES (30, 'Downtown');
 INSERT INTO Route (rid, destination) VALUES (40, 'Broadway');
 INSERT INTO Route (rid, destination) VALUES (50, 'Broadway');
+
 INSERT INTO Route (rid, destination) VALUES (101, 'Downtown');
 INSERT INTO Route (rid, destination) VALUES (201, 'UBC');
 INSERT INTO Route (rid, destination) VALUES (301, 'Airport');
@@ -234,22 +281,31 @@ INSERT INTO BusStop (stop_id, address) VALUES (5, 'W Pender St @ W Granville St'
 INSERT INTO BusStop (stop_id, address) VALUES (6, 'Powell St @ Commercial Dr');
 INSERT INTO BusStop (stop_id, address) VALUES (7, 'E Broadway @ Clark Dr');
 
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (1, 10, 1);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (2, 10, 2);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (3, 10, 3);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (1, 20, 3);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (6, 20, 2);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (7, 20, 1);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (4, 30, 1);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (5, 30, 2);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (3, 40, 1);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (2, 40, 2);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (1, 50, 3);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (6, 50, 2);
-INSERT INTO BusRouteStopsAt (stop_id, rid, route_pos) VALUES (4, 50, 1);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (1, 10, '08:01', 1);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (2, 10, '08:09', 2);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (3, 10, '08:15', 3);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (1, 20, '10:01', 3);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (6, 20, '09:51', 2);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (7, 20, '09:45', 1);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (4, 30, '16:21', 1);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (5, 30, '16:41', 2);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (3, 40, '16:35', 1);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (2, 40, '16:52', 2);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (1, 50, '20:01', 3);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (6, 50, '20:17', 2);
+INSERT INTO BusRouteStopsAt (stop_id, rid, sched_time, route_pos) VALUES (4, 50, '20:37', 1);
 
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (1, 10);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (2, 20);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (3, 30);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (4, 40);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (5, 50);
 
-
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (1, 101);
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (2, 201);
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (3, 301);
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (4, 401);
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (5, 501);
 
 INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2024');
 INSERT INTO RIDER2 (rider_type,dob) VALUES ('child','2023');
@@ -457,7 +513,6 @@ INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (4, 3,'01/05/2024 
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 4,'01/06/2024 12:00');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 5,'02/03/2024 12:50');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (1, 6,'01/01/2024 12:01');
-
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (1, 6,'01/01/2024 12:00');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (2, 6,'01/02/2024 12:00');
 INSERT INTO ValidateFare(scan_id,compass_id,date_time) VALUES (3, 6,'01/03/2024 12:00');

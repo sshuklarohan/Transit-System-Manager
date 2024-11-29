@@ -26,7 +26,10 @@
     <h2> Add Clients </h2>
     <form id="insertClientTable">
         Compass_ID: <input type="number" id="insertCompass_Id" placeholder="Enter compass_ID" required> <br><br>
-        Date of Birth: <input type="number" id="insertDOB" placeholder="YYYY" required><br><br>
+        Date of Birth: <select id="insertDOB" required>
+            <option value="" disabled selected>(Select Year)</option>
+        </select> <br><br>
+
         <button type="submit"> insert </button> <br>
     </form>
     <div id="insertResultMsg"></div>
@@ -53,7 +56,6 @@
 
     <h2>Fares</h2>
 
-    
     <table id="fareTable" border="1">
         <thead>
             <tr id="headerRow">
@@ -64,28 +66,8 @@
     </table>
 
 
-
-
-
-
-
-
     <br><hr><br> <!-- ===================================================================== -->
 
-    <h2>Aggregations</h2>
-
-    Total spending of clients who have more than 1 paid fare: <button id="paymentTableBtn" type="button">view</button>
-    <br><br>
-    <table id="paymentTable" border="1">
-        <thead>
-            <tr>
-                <th>compass_ID</th>
-                <th>total ($)</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
 
     <br><br>
 
