@@ -122,3 +122,7 @@ async function fetchDriversByRoute() {
     // });
     // resultsContainer.appendChild(list);
 }
+
+function redirectHome(){
+    window.location.href = "./index.html";
+}

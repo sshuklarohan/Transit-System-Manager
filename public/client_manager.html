@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <button id = "home button" onclick= redirectHome()>Home</button>
 
 
     <h2>Show Clients</h2>
@@ -22,39 +23,53 @@
     </table>
 
     <br><hr><br> <!-- ========================================================================= -->
-
-    <h2> Add Clients </h2>
-    <form id="insertClientTable">
-        Compass_ID: <input type="number" id="insertCompass_Id" placeholder="Enter compass_ID" required> <br><br>
-        Date of Birth: <select id="insertDOB" required>
-            <option value="" disabled selected>(Select Year)</option>
-        </select> <br><br>
-
-        <button type="submit"> insert </button> <br>
-    </form>
-    <div id="insertResultMsg"></div>
-
-    <br><hr><br> <!-- ===================================================================== -->
+    <div id="addClients" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;border-radius: 10px;">
+        <h2>Add Clients</h2>
+        <form id="insertClientTable">
+            <label for="insertCompass_Id">Compass_ID:</label>
+            <input type="number" id="insertCompass_Id" placeholder="Enter Compass_ID" required style = "width: fit-content;">
+            <br><br>
+            <label for="insertDOB">Date of Birth:</label>
+            <input type="number" id="insertDOB" placeholder="YYYY" required style = "width: fit-content;">
+            <br><br>
+            <button type="submit">Insert</button>
+        </form>
+        <div id="insertResultMsg"></div>
+    </div>
     
-    <h2> Client Select and Actions </h2>
-    <select id="selectCompass_Id" required>
-        <option value="" disabled selected>(Select Compass_ID)</option>
-    </select>
-    <button id="DeleteClientBtn" type="button">RemoveClient</button>
-    <button id="ViewFaresBtn" type="button">ViewFares</button>
-        
-        <label for="projections">(ctrl/cmd + click selections):</label>
-        <select id="projections" multiple size="5">
-        <option value="p1.date_time">Date_time</option>
-        <option value="fare_type">fare_type</option>
-        <option value="s.scan_id">scanner ID</option>
-        <option value="stat_id">Station ID</option>
-        <option value="bus_id">Bus ID</option>
+    <!-- Delete Clients Section -->
+    <div id="deleteClients" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;border-radius: 10px;">
+        <h2>Remove Clients</h2>
+        <select id="selectCompass_Id_rem" required>
+            <option value="" disabled selected>(Select Compass_ID)</option>
         </select>
         <br><br>
-    <br><hr><br> <!-- ===================================================================== -->
+        <button id="DeleteClientBtn" type="button">Remove Client</button>
+        <div id="removeResultMsg"></div>
 
-    <h2>Fares</h2>
+    </div>
+    
+    <br><hr><br>
+    
+    <!-- Projections Section -->
+    <div id="projectionsSection" style="border: 1px solid #ccc; padding: 10px;border-radius: 10px;">
+        <h2>View Fares</h2>
+        <select id="selectCompass_Id_view" required>
+            <option value="" disabled selected>(Select Compass_ID)</option>
+        </select>
+        <br><br>
+        <label for="projections">(Ctrl/Cmd + click to select fields):</label>
+        <select id="projections" multiple size="5" style="width: 200px;">
+            <option value="p1.date_time">Date_time</option>
+            <option value="fare_type">fare_type</option>
+            <option value="s.scan_id">Scanner ID</option>
+            <option value="stat_id">Station ID</option>
+            <option value="bus_id">Bus ID</option>
+        </select>
+        <br><br>
+        <button id="ViewFaresBtn" type="button">View Fares</button>
+    </div>
+    <br><br>
 
     <table id="fareTable" border="1">
         <thead>
@@ -68,9 +83,24 @@
 
     <br><hr><br> <!-- ===================================================================== -->
 
+    <h2>Client Insights</h2>
 
     <br><br>
 
+    Total spending of clients who have more than 1 paid fare: <button id="paymentTableBtn" type="button">view</button>
+    <br><br>
+    <table id="paymentTable" border="1">
+        <thead>
+            <tr>
+                <th>compass_ID</th>
+                <th>total ($)</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <br><br>
 
     Clients who have used every scanner: <button id="everyScannerTableBtn" type="button">view</button>
     <br><br>

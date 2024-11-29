@@ -172,15 +172,15 @@ window.onload = function() {
 };
 
 function redirectRoute() {
-    window.location.href = "/routes_manager.html";
+    window.location.href = "./routes_manager.html";
 }
 
 function redirectClient() {
-    window.location.href = "/client_manager.html";
+    window.location.href = "./client_manager.html";
 }
 
 function redirectEmployees() {
-    window.location.href = "/emp_veh_manager.html";
+    window.location.href = "./emp_veh_manager.html";
 }
 
 // General function to refresh the displayed table data. 

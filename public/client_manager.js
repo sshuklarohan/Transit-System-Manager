@@ -33,7 +33,7 @@ async function fetchAndDisplayClients() {
     });
 
     console.log("clients" + clients);
-
+    populateDOB();
     updateUserSelect(clients);
 }
 
@@ -99,7 +99,7 @@ async function fetchAndDisplayFares() {
     if(selectedOptions.length === 0){
         return;
     }
-    const id = document.getElementById("selectCompass_Id").value;
+    const id = document.getElementById("selectCompass_Id_view").value;
     if(id === ""){
         return;
     }
@@ -154,18 +154,24 @@ async function fetchAndDisplayFares() {
 
 
 function updateUserSelect(clients) {
-    const selectelm = document.getElementById("selectCompass_Id");
-    selectelm.innerHTML = "";
+    const selectelm1 = document.getElementById("selectCompass_Id_rem");
+    const selectelm2 = document.getElementById("selectCompass_Id_view");
+    selectelm1.innerHTML = "";
+    selectelm2.innerHTML = "";
 
-    console.log("clients in user select" + clients);
 
-    for(let c of clients){
-        console.log(c);
-        const option = document.createElement('option');
-        option.value = c;
-        option.textContent = c;
-        selectelm.appendChild(option);
-    };
+
+    for (let c of clients) {
+        const option1 = document.createElement('option');
+        option1.value = c;
+        option1.textContent = c;
+        selectelm1.appendChild(option1);
+
+        const option2 = document.createElement('option');
+        option2.value = c;
+        option2.textContent = c;
+        selectelm2.appendChild(option2);
+    }
 }
 
 function populateDOB() {
@@ -184,9 +190,15 @@ function populateDOB() {
 
 async function insertClient(event) {
     event.preventDefault();
-
+    const messageElement = document.getElementById('insertResultMsg');
     const idValue = document.getElementById('insertCompass_Id').value;
     let dobValue = document.getElementById('insertDOB').value;
+
+    if(dobValue > 2024 || dobValue < 1930){
+        messageElement.textContent = "DOB value invalid";
+        return;
+    }
+    dobValue = dobValue.toString();
 
     const response = await fetch('/insert-clientTable', {
         method: 'POST',
@@ -200,23 +212,23 @@ async function insertClient(event) {
     });
 
     const responseData = await response.json();
-    const messageElement = document.getElementById('insertResultMsg');
+    
 
     if (responseData.success) {
         messageElement.textContent = "Data inserted successfully!";
-        fetchTableData();
     } else {
         messageElement.textContent = "Error inserting data!";
     }
 
+    fetchAndDisplayClients();
 }
 
 async function removeClient(){
-    const id = document.getElementById("selectCompass_Id").value;
+    const id = document.getElementById("selectCompass_Id_rem").value;
     if(id === ""){
         return;
     }
-
+ 
     const response = await fetch('/removeClient', {
         method: 'POST',
         headers: {
@@ -228,15 +240,21 @@ async function removeClient(){
     });
 
     const responseData = await response.json();
-    const messageElement = document.getElementById('insertResultMsg');
+    const messageElement = document.getElementById('removeResultMsg');
+    console.log(responseData.data);
 
-    if (responseData.success) {
-        messageElement.textContent = "Data inserted successfully!";
+    if (responseData.data) {
+        messageElement.textContent = "Data removed successfully!";
         fetchAndDisplayClients();
     } else {
-        messageElement.textContent = "Error inserting data!";
+        messageElement.textContent = "Error removing data!";
+        fetchAndDisplayClients();
     }
 
+}
+
+function redirectHome(){
+    window.location.href = "./index.html";
 }
 
 window.onload = function() {

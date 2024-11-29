@@ -94,7 +94,7 @@ async function fetchClientTableFromDb() {
     });
 }
 
-async function fetchEveryScanerTableFromDb() {
+async function fetchEveryScannerTableFromDb() {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute('SELECT r.compass_id FROM RIDER1 r WHERE NOT EXISTS (SELECT s.scan_id FROM ScannerHas s WHERE NOT EXISTS (SELECT v.compass_id FROM ValidateFare v WHERE v.compass_id = r.compass_id AND v.scan_id = s.scan_id))');
         return result.rows;
@@ -422,5 +422,5 @@ module.exports = {
     removeClient,
     fetchFareTableFromDb,
     fetchPaymentTableFromDb,
-    fetchEveryScanerTableFromDb
+    fetchEveryScannerTableFromDb
 };
