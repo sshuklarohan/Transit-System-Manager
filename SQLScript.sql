@@ -227,6 +227,24 @@ INSERT INTO DrivesTrain (train_id, staff_id) VALUES (3, 8);
 INSERT INTO DrivesTrain (train_id, staff_id) VALUES (4, 9);
 INSERT INTO DrivesTrain (train_id, staff_id) VALUES (5, 10);
 
+INSERT INTO Driver (staff_id, name, seniority) VALUES (11, 'Clarissa Cox', 'Junior');
+INSERT INTO BusDriver (staff_id) VALUES (11);
+INSERT INTO Bus (bus_id, bus_size) VALUES (6, 70);
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (6, 11);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (6, 20);
+
+INSERT INTO Driver (staff_id, name, seniority) VALUES (12, 'Maya Bhalla', 'Senior');
+INSERT INTO TrainDriver (staff_id) VALUES (12);
+INSERT INTO Train (train_id, train_size) VALUES (6, 350);
+INSERT INTO DrivesTrain (train_id, staff_id) VALUES (6, 12);
+INSERT INTO TrainAssigned (train_id, route_id) VALUES (6, 301);
+
+INSERT INTO Driver (staff_id, name, seniority) VALUES (13, 'Kevin Leyton-Brown', 'Junior');
+INSERT INTO BusDriver (staff_id) VALUES (13);
+INSERT INTO Bus (bus_id, bus_size) VALUES (7, 35);
+INSERT INTO DrivesBus (bus_id, staff_id) VALUES (7, 13);
+INSERT INTO BusAssigned (bus_id, route_id) VALUES (7, 50);
+
 INSERT INTO Route (rid, destination) VALUES (10, 'Downtown');
 INSERT INTO Route (rid, destination) VALUES (20, 'UBC');
 INSERT INTO Route (rid, destination) VALUES (30, 'Downtown');
